@@ -8,85 +8,75 @@
 
 #import "VWWUserDefaults.h"
 
-static NSString *VWWUserDefaultsHasShownWelcomeScreenKey = @"has_shown_welcome_screen";
-static NSString *VWWUserDefaultsTouchScreenKey = @"touch_screen";
-static NSString *VWWUserDefaultsAccelerometersKey = @"accelerometers";
-static NSString *VWWUserDefaultsGyroscopesKey = @"gyroscopes";
-static NSString *VWWUserDefaultsMagnetometersKey = @"magnetometers";
-
-//static NSString *VWWUserDefaultsKey = @"";
-static NSString *VWWUserDefaultsAccelerometersMinMaxValuesKey = @"accelerometer_min_max_values";
-static NSString *VWWUserDefaultsGyroscopesMinMaxValuesKey = @"gyroscopes_min_max_values";
-static NSString *VWWUserDefaultsMagnetometersMinMaxValuesKey = @"magnetometers_min_max_values";
+static NSString *VWWUserDefaultsLogGPSKey = @"logGPS";
+static NSString *VWWUserDefaultsLogHeadingKey = @"logHeading";
+static NSString *VWWUserDefaultsLogAccelerometersKey = @"logAccelerometers";
+static NSString *VWWUserDefaultsLogGryoscopesKey = @"logGyroscopes";
+static NSString *VWWUserDefaultsLogMagnetometersKey = @"logMagnetometers";
+static NSString *VWWUserDefaultsLogAttitudeKey = @"logAttitude";
+static NSString *VWWUserDefaultsLogOverlayDataOnVideoKey = @"overlayDataOnVideo";
 
 @implementation VWWUserDefaults
 
-
-+(BOOL)hasShownWelcomeScreen{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsHasShownWelcomeScreenKey];
++(BOOL)logGPS{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogGPSKey];
 }
-+(void)setHasShownWelcomeScreen:(BOOL)hasShownWelcomeScreen{
-    [[NSUserDefaults standardUserDefaults] setBool:hasShownWelcomeScreen forKey:VWWUserDefaultsHasShownWelcomeScreenKey];
++(void)setLogGPS:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogGPSKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)logHeading{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogHeadingKey];
+}
++(void)setLogHeading:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogHeadingKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
-+(void)setTouchscreenSettings:(NSDictionary*)dictionary{
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:VWWUserDefaultsTouchScreenKey];
++(BOOL)logAccelerometers{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogAccelerometersKey];
+}
++(void)setLogAccelerometers:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogAccelerometersKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(NSDictionary*)touchscreenSettings{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsTouchScreenKey];
-}
 
-+(void)setAccelerometersSettings:(NSDictionary*)dictionary{
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:VWWUserDefaultsAccelerometersKey];
+
++(BOOL)logGyroscopes{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogGryoscopesKey];
+}
++(void)setLogGyroscopes:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogGryoscopesKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(NSDictionary*)accelerometersSettings{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsAccelerometersKey];
-}
 
-+(void)setGyroscopesSettings:(NSDictionary*)dictionary{
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:VWWUserDefaultsGyroscopesKey];
+
++(BOOL)logMagnetometers{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogMagnetometersKey];
+}
++(void)setLogMagnetometers:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogMagnetometersKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(NSDictionary*)gyroscopesSettings{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsGyroscopesKey];
-}
 
-+(void)setMagnetometersSettings:(NSDictionary*)dictionary{
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:VWWUserDefaultsMagnetometersKey];
+
++(BOOL)logAttitude{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogAttitudeKey];
+}
++(void)setLogAttitude:(BOOL)log{
+    [[NSUserDefaults standardUserDefaults] setBool:log forKey:VWWUserDefaultsLogAttitudeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(NSDictionary*)magnetometersSettings{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsMagnetometersKey];
+
++(BOOL)overlayDataOnVideo{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VWWUserDefaultsLogOverlayDataOnVideoKey];
 }
-
-
-
-+(void)setAccelerometersMinMaxValues:(NSDictionary*)minMaxValues{
-    [[NSUserDefaults standardUserDefaults] setObject:minMaxValues forKey:VWWUserDefaultsAccelerometersMinMaxValuesKey];
++(void)setOverlayDataOnVideo:(BOOL)overlay{
+    [[NSUserDefaults standardUserDefaults] setBool:overlay forKey:VWWUserDefaultsLogOverlayDataOnVideoKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-+(NSDictionary*)accelerometersMinMaxValues{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsAccelerometersMinMaxValuesKey];
-}
 
 
-+(void)setGyroscopesMinMaxValues:(NSDictionary*)minMaxValues{
-    [[NSUserDefaults standardUserDefaults] setObject:minMaxValues forKey:VWWUserDefaultsGyroscopesMinMaxValuesKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-+(NSDictionary*)gyroscopesMinMaxValues{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsGyroscopesMinMaxValuesKey];
-}
-
-+(void)setMagnetometersMinMaxValues:(NSDictionary*)minMaxValues{
-    [[NSUserDefaults standardUserDefaults] setObject:minMaxValues forKey:VWWUserDefaultsMagnetometersMinMaxValuesKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-+(NSDictionary*)magnetometersMinMaxValues{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsMagnetometersMinMaxValuesKey];
-}
 @end

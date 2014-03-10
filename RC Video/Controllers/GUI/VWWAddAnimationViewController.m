@@ -24,7 +24,6 @@
 
 - (void)applyVideoEffectsToComposition:(AVMutableVideoComposition *)composition size:(CGSize)size
 {
-    // 1
     UIImage *animationImage = [UIImage imageNamed:@"star.png"];;
     CALayer *overlayLayer1 = [CALayer layer];
     [overlayLayer1 setContents:(id)[animationImage CGImage]];
@@ -36,7 +35,7 @@
     overlayLayer2.frame = CGRectMake(size.width/2-64, size.height/2 - 200, 128, 128);
     [overlayLayer2 setMasksToBounds:YES];
     
-    // 2 - Rotate
+    // Rotate
     if (_animationSelectSegment.selectedSegmentIndex == 0) {
         CABasicAnimation *animation =
         [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
@@ -59,7 +58,7 @@
         animation.beginTime = AVCoreAnimationBeginTimeAtZero;
         [overlayLayer2 addAnimation:animation forKey:@"rotation"];
         
-        // 3 - Fade
+        // Fade
     } else if(_animationSelectSegment.selectedSegmentIndex == 1) {
         CABasicAnimation *animation
         =[CABasicAnimation animationWithKeyPath:@"opacity"];
@@ -82,7 +81,7 @@
         animation.beginTime = AVCoreAnimationBeginTimeAtZero;
         [overlayLayer2 addAnimation:animation forKey:@"animateOpacity"];
         
-        // 4 - Twinkle
+        // Twinkle
     } else if(_animationSelectSegment.selectedSegmentIndex == 2) {
         CABasicAnimation *animation =
         [CABasicAnimation animationWithKeyPath:@"transform.scale"];
@@ -106,7 +105,6 @@
         [overlayLayer2 addAnimation:animation forKey:@"scale"];
     }
     
-    // 5
     CALayer *parentLayer = [CALayer layer];
     CALayer *videoLayer = [CALayer layer];
     parentLayer.frame = CGRectMake(0, 0, size.width, size.height);

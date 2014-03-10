@@ -10,31 +10,21 @@
 
 #import "VWWCaptureVideoViewController.h"
 #import <AVFoundation/AVFoundation.h>
-//#import "VWWColors.h"
-//#import "VWWColor.h"
-//#import "VWWCrosshairView.h"
+#import "VWWDataLogController.h"
 
 static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 
-@interface VWWCaptureVideoViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
-@property dispatch_queue_t avqueue;
+@interface VWWCaptureVideoViewController () <AVCaptureVideoDataOutputSampleBufferDelegate, VWWDataLogControllerDelegate>
+// IB
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
-@property (nonatomic) BOOL isRecording;
-//@property (weak, nonatomic) IBOutlet UIView *colorContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
+@property (weak, nonatomic) IBOutlet UISwitch *overlaySwitch;
+@property (weak, nonatomic) IBOutlet UILabel *overlayLabel;
 
-
-//@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UIView *colorView;
-//@property (weak, nonatomic) IBOutlet UILabel *hexLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *redLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *greenLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *blueLabel;
-
-//@property (weak, nonatomic) IBOutlet VWWCrosshairView *crosshairView;
-
-
-
+// iVars
+@property dispatch_queue_t avqueue;
+@property (nonatomic) BOOL isRecording;
+@property (nonatomic, strong) VWWDataLogController *dataLogController;
 @end
 
 @implementation VWWCaptureVideoViewController
@@ -51,17 +41,25 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.avqueue = dispatch_queue_create("com.vaporwarewolf.colorblind", NULL);
-//    self.colorContainerView.hidden = YES;
-//    self.colorContainerView.alpha = 0.0;
-//    self.crosshairView.userInteractionEnabled = NO;
+    self.avqueue = dispatch_queue_create("com.vaporwarewolf.avfoundation", NULL);
+
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.navigationController.navigationBarHidden = NO;
 //    self.crosshairView.selectedPixel = self.crosshairView.center;
+    self.overlayLabel.text = @"";
+    self.overlaySwitch.on = [VWWUserDefaults overlayDataOnVideo];
+    self.overlayLabel.hidden = ![VWWUserDefaults overlayDataOnVideo];
+    
+    self.dataLogController = [VWWDataLogController sharedInstance];
+    self.dataLogController.delegate = self;
+    [self.dataLogController start];
+    
+    
+    
     [self startCamera];
 }
 
@@ -70,6 +68,10 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//-(BOOL)prefersStatusBarHidden{
+//    return YES;
+//}
 
 #pragma mark IBActions
 
@@ -84,10 +86,10 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 
 - (IBAction)startButtonTouchUpInside:(id)sender {
     if(self.isRecording == YES){
-        [self.startButton setTitle:@"Stop" forState:UIControlStateNormal];
+        [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
         [self performSegueWithIdentifier:VWWSegueRecordToEdit sender:self];
     } else {
-        [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
+        [self.startButton setTitle:@"Stop" forState:UIControlStateNormal];
     }
     
     self.isRecording = !self.isRecording;
@@ -95,6 +97,10 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 
 
 
+- (IBAction)overlaySwitchValueChanged:(UISwitch*)sender {
+    [VWWUserDefaults setOverlayDataOnVideo:sender.on];
+    self.overlayLabel.hidden = !sender.on;
+}
 
 #pragma mark Private methods
 
@@ -398,6 +404,37 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 //        self.crosshairsView.selectedPixel = CGPointMake(halfWidth, halfHeight);
     });
 }
+
+#pragma mark VWWDataLogControllerDelegate
+-(void)dataLogController:(VWWDataLogController*)sender didLogDataPoint:(NSDictionary*)dataPoint{
+    NSMutableString *overlayString = [[NSMutableString alloc]initWithString:@""];
+    
+    
+    CLLocation *location = dataPoint[VWWDataLogControllerLocationKey];
+    if(location){
+//        if(location.coordinate.latitude != 0) {
+            [overlayString appendFormat:@"latitude: %.4f\n", location.coordinate.latitude];
+//        }
+//        if(location.coordinate.longitude != 0){
+            [overlayString appendFormat:@"longitude: %.4f\n", location.coordinate.longitude];
+//        }
+//        if(location.altitude != 0){
+            [overlayString appendFormat:@"altitude: %.1fm\n", location.altitude];
+//        }
+    }
+    
+    CLHeading *heading = dataPoint[VWWDataLogControllerHeadingKey];
+    if(heading){
+//        if(heading.magneticHeading != 0){
+            [overlayString appendFormat:@"heading: %f\n", heading.magneticHeading];
+//        }
+    }
+    
+    
+    
+    self.overlayLabel.text = overlayString;
+}
+
 
 
 

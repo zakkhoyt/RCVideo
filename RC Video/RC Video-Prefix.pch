@@ -15,4 +15,5 @@
     #import <Foundation/Foundation.h>
     #import "VWWUtilities.h"
     #import "VWWUserDefaults.h"
+    #import "VWWBlocks.h"
 #endif

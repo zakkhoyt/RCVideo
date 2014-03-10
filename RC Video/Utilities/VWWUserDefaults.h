@@ -9,30 +9,27 @@
 #import <Foundation/Foundation.h>
 
 @interface VWWUserDefaults : NSObject
-// Set the smile server URL
-+(BOOL)hasShownWelcomeScreen;
-+(void)setHasShownWelcomeScreen:(BOOL)hasShownWelcomeScreen;
 
-+(void)setTouchscreenSettings:(NSDictionary*)dictionary;
-+(NSDictionary*)touchscreenSettings;
++(BOOL)logGPS;
++(void)setLogGPS:(BOOL)log;
 
-+(void)setAccelerometersSettings:(NSDictionary*)dictionary;
-+(NSDictionary*)accelerometersSettings;
++(BOOL)logHeading;
++(void)setLogHeading:(BOOL)log;
 
-+(void)setGyroscopesSettings:(NSDictionary*)dictionary;
-+(NSDictionary*)gyroscopesSettings;
++(BOOL)logAccelerometers;
++(void)setLogAccelerometers:(BOOL)log;
 
-+(void)setMagnetometersSettings:(NSDictionary*)dictionary;
-+(NSDictionary*)magnetometersSettings;
++(BOOL)logGyroscopes;
++(void)setLogGyroscopes:(BOOL)log;
+
++(BOOL)logMagnetometers;
++(void)setLogMagnetometers:(BOOL)log;
+
++(BOOL)logAttitude;
++(void)setLogAttitude:(BOOL)log;
 
 
-+(void)setAccelerometersMinMaxValues:(NSDictionary*)minMaxValues;
-+(NSDictionary*)accelerometersMinMaxValues;
-
-+(void)setGyroscopesMinMaxValues:(NSDictionary*)minMaxValues;
-+(NSDictionary*)gyroscopesMinMaxValues;
-
-+(void)setMagnetometersMinMaxValues:(NSDictionary*)minMaxValues;
-+(NSDictionary*)magnetometersMinMaxValues;
++(BOOL)overlayDataOnVideo;
++(void)setOverlayDataOnVideo:(BOOL)overlay;
 
 @end
