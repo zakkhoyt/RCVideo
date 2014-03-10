@@ -1,5 +1,5 @@
 //
-//  VWWViewController.h
+//  VWWDefaultTableViewController.h
 //  RC Video
 //
 //  Created by Zakk Hoyt on 3/10/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VWWViewController : UIViewController
+@interface VWWDefaultTableViewController : UITableViewController
 
 @end
