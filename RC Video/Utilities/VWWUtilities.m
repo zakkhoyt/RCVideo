@@ -23,10 +23,10 @@ const float kFeetInAMeter = 3.28084;
 }
 +(float)metersBetweenPointA:(CLLocation*)pointA pointB:(CLLocation*)pointB{
     CLLocationDistance distance = [pointA distanceFromLocation:pointB];
-    return (float)distance;
+    return fabs((float)distance);
 }
 +(float)feetBetweenPointA:(CLLocation*)pointA pointB:(CLLocation*)pointB{
-    CLLocationDistance distance = [pointA distanceFromLocation:pointB];
+    CLLocationDistance distance = [self metersBetweenPointA:pointA pointB:pointB];
     return ((float)(distance) * kFeetInAMeter);
 }
 

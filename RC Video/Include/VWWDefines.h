@@ -22,7 +22,7 @@
 #define VWW_LOG_TODO_TASK(...) NSLog(@"%s:%d TODO: %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:__VA_ARGS__]);
 #define VWW_LOG_TEST(...) NSLog(@"%s:%d\n********************************************************* TESTING: %@ *********************************************************", __FUNCTION__, __LINE__, [NSString stringWithFormat:__VA_ARGS__]);
 
-#if defined(SM_DEBUG)
+#if defined(DEBUG)
 #define VWW_LOG_CRITICAL(...) NSLog(@"%s:%d ***** CRITICAL ERROR: %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:__VA_ARGS__]); assert(0);
 #define VWW_LOG_DEBUG(...) NSLog(@"%s:%d ***** DEBUG: %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:__VA_ARGS__]);
 #define VWW_LOG_VERBOSE(...) NSLog(@"%s:%d ***** VERBOSE: %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:__VA_ARGS__]);

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VWWEditVideoTableViewController : UITableViewController
-
+@property (nonatomic, strong) NSURL *videoURL;
 @end

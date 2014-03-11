@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import "VWWFileController.h"
 @interface RC_VideoTests : XCTestCase
 
 @end
@@ -26,9 +26,21 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testDocumentsController
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSURL *url = [VWWFileController urlForDocumentsDirectory];
+    XCTAssertNotNil(url, @"Could not get url for documents directory");
+    VWW_LOG_INFO(@"path for documents directory: %@", url);
+    
+    NSString *path = [VWWFileController pathForDocumentsDirectory];
+    XCTAssertNotNil(path, @"Could not get path for documents directory");
+    VWW_LOG_INFO(@"url for documents directory: %@", [VWWFileController urlForDocumentsDirectory]);
+    
+    NSArray *videos = [VWWFileController urlsForVideos];
+    XCTAssertNotNil(videos, @"Could not get list of videos on disk");
+    VWW_LOG_INFO(@"videos: %@", videos);
+    
+    VWW_LOG_TRACE;
 }
 
 @end

@@ -39,6 +39,7 @@
 		C695863318CE530900835E64 /* VWWMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863218CE530900835E64 /* VWWMotion.m */; };
 		C695863818CE573600835E64 /* VWWDataLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863718CE573600835E64 /* VWWDataLogController.m */; };
 		C695863B18CE5E9900835E64 /* VWWEditVideoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863A18CE5E9900835E64 /* VWWEditVideoTableViewController.m */; };
+		CFEF645118CEB93E000EDB82 /* VWWFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEF645018CEB93E000EDB82 /* VWWFileController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		C695863718CE573600835E64 /* VWWDataLogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWDataLogController.m; sourceTree = "<group>"; };
 		C695863918CE5E9900835E64 /* VWWEditVideoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWEditVideoTableViewController.h; sourceTree = "<group>"; };
 		C695863A18CE5E9900835E64 /* VWWEditVideoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWEditVideoTableViewController.m; sourceTree = "<group>"; };
+		CFEF644F18CEB93E000EDB82 /* VWWFileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWFileController.h; sourceTree = "<group>"; };
+		CFEF645018CEB93E000EDB82 /* VWWFileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWFileController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,12 +250,8 @@
 		C6204E5E18CE42F9007B8986 /* NonGUI */ = {
 			isa = PBXGroup;
 			children = (
-				C695863618CE573600835E64 /* VWWDataLogController.h */,
-				C695863718CE573600835E64 /* VWWDataLogController.m */,
-				C695862A18CE517500835E64 /* VWWMotionController.h */,
-				C695862B18CE517500835E64 /* VWWMotionController.m */,
-				C695862D18CE518100835E64 /* VWWLocationController.h */,
-				C695862E18CE518100835E64 /* VWWLocationController.m */,
+				CFEF644E18CEB920000EDB82 /* Files */,
+				CFEF644D18CEB90F000EDB82 /* SensorData */,
 			);
 			path = NonGUI;
 			sourceTree = "<group>";
@@ -360,6 +359,28 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CFEF644D18CEB90F000EDB82 /* SensorData */ = {
+			isa = PBXGroup;
+			children = (
+				C695863618CE573600835E64 /* VWWDataLogController.h */,
+				C695863718CE573600835E64 /* VWWDataLogController.m */,
+				C695862A18CE517500835E64 /* VWWMotionController.h */,
+				C695862B18CE517500835E64 /* VWWMotionController.m */,
+				C695862D18CE518100835E64 /* VWWLocationController.h */,
+				C695862E18CE518100835E64 /* VWWLocationController.m */,
+			);
+			name = SensorData;
+			sourceTree = "<group>";
+		};
+		CFEF644E18CEB920000EDB82 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				CFEF644F18CEB93E000EDB82 /* VWWFileController.h */,
+				CFEF645018CEB93E000EDB82 /* VWWFileController.m */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -464,6 +485,7 @@
 				C6204E6018CE42F9007B8986 /* VWWAddBorderViewController.m in Sources */,
 				C695863B18CE5E9900835E64 /* VWWEditVideoTableViewController.m in Sources */,
 				C6204E2818CE4289007B8986 /* VWWAppDelegate.m in Sources */,
+				CFEF645118CEB93E000EDB82 /* VWWFileController.m in Sources */,
 				C6204E6D18CE4370007B8986 /* NSTimer+Blocks.m in Sources */,
 				C695862C18CE517500835E64 /* VWWMotionController.m in Sources */,
 				C6204E5F18CE42F9007B8986 /* VWWAddAnimationViewController.m in Sources */,

@@ -23,7 +23,10 @@
     return self;
 }
 
-
+-(void)setVideoAsset:(AVAsset *)videoAsset{
+    _videoAsset = videoAsset;
+    VWW_LOG_INFO(@"Loaded video asset: %@", videoAsset);
+}
 - (BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate {
   // 1 - Validations
   if (([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)

@@ -113,41 +113,37 @@
         // Update data log string for delegate
         NSMutableString *logString = [[NSMutableString alloc]initWithString:@""];
         if(self.location){
-            //        if(location.coordinate.latitude != 0) {
+
+            // Latitude/Longitude or distance
             if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
                 [logString appendFormat:@"latitude: %.4f\n", self.location.coordinate.latitude];
-            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                [logString appendFormat:@"latitude: TODO\n"];
-            }
-            
-            //        }
-            //        if(location.coordinate.longitude != 0){
-            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
                 [logString appendFormat:@"longitude: %.4f\n", self.location.coordinate.longitude];
             } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                [logString appendFormat:@"longitude: TODO\n"];
+                float deltaCoordinate = [VWWUtilities metersBetweenPointA:self.calibrateLocation pointB:self.location];
+                if([VWWUserDefaults units] == VWWUnitTypeMeters){
+                    [logString appendFormat:@"distance: %.1fm\n", deltaCoordinate];
+                } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
+                    deltaCoordinate = [VWWUtilities metersToFeet:deltaCoordinate];
+                    [logString appendFormat:@"distance: %.1ff\n", deltaCoordinate];
+                }
+                
             }
             
-            //        }
-            //        if(location.altitude != 0){
+            // Altitude
             if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
                 [logString appendFormat:@"altitude: %.1fm\n", self.location.altitude];
             } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                
-                //[logString appendFormat:@"altitude: TODO\n"];
                 float deltaAltitude = self.location.altitude - self.calibrateLocation.altitude;
                 if([VWWUserDefaults units] == VWWUnitTypeMeters){
-                    [logString appendFormat:@"altitude: %.1f m\n", deltaAltitude];
+                    [logString appendFormat:@"altitude: %.1fm\n", deltaAltitude];
                 } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
                     deltaAltitude = [VWWUtilities metersToFeet:deltaAltitude];
-                    [logString appendFormat:@"altitude: %.1f f\n", deltaAltitude];
+                    [logString appendFormat:@"altitude: %.1ff\n", deltaAltitude];
                 }
             }
-            
-            //        }
         }
         
-        
+        // Heading
         if(self.heading){
             //        if(heading.magneticHeading != 0){
             [logString appendFormat:@"heading: %f\n", self.heading.magneticHeading];
