@@ -15,8 +15,8 @@ typedef enum {
 } VWWOffsetType;
 
 typedef enum {
-    VWWOffsetTypeMeters = 0,
-    VWWOffsetTypeFeet = 1,
+    VWWUnitTypeMeters = 0,
+    VWWUnitTypeFeet = 1,
 } VWWUnitType;
 
 #endif

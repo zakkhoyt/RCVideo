@@ -133,7 +133,15 @@
             if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
                 [logString appendFormat:@"altitude: %.1fm\n", self.location.altitude];
             } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                [logString appendFormat:@"altitude: TODO\n"];
+                
+                //[logString appendFormat:@"altitude: TODO\n"];
+                float deltaAltitude = self.location.altitude - self.calibrateLocation.altitude;
+                if([VWWUserDefaults units] == VWWUnitTypeMeters){
+                    [logString appendFormat:@"altitude: %.1f m\n", deltaAltitude];
+                } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
+                    deltaAltitude = [VWWUtilities metersToFeet:deltaAltitude];
+                    [logString appendFormat:@"altitude: %.1f f\n", deltaAltitude];
+                }
             }
             
             //        }
