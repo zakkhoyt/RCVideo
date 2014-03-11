@@ -31,6 +31,10 @@
 +(BOOL)overlayDataOnVideo;
 +(void)setOverlayDataOnVideo:(BOOL)overlay;
 
++(NSUInteger)updateFrequency;
++(void)setUpdateFrequency:(NSUInteger)updateFrequency;
+
+
 +(VWWUnitType)units;
 +(void)setUnits:(VWWUnitType)units;
 

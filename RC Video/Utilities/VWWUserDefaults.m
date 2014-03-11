@@ -17,6 +17,7 @@ static NSString *VWWUserDefaultsLogAttitudeKey = @"logAttitude";
 static NSString *VWWUserDefaultsLogOverlayDataOnVideoKey = @"overlayDataOnVideo";
 static NSString *VWWUserDefaultsUnitsKey = @"units";
 static NSString *VWWUserDefaultsOffsetKey = @"offset";
+static NSString *VWWUserDefaultsUpdateFrequencyKey = @"updateFrequency";
 
 
 @implementation VWWUserDefaults
@@ -81,6 +82,17 @@ static NSString *VWWUserDefaultsOffsetKey = @"offset";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
++(NSUInteger)updateFrequency{
+    NSNumber *updateFrequencyNumber = [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsUpdateFrequencyKey];
+    return updateFrequencyNumber == nil ? 2 : updateFrequencyNumber.unsignedIntegerValue;
+}
++(void)setUpdateFrequency:(NSUInteger)updateFrequency{
+    [[NSUserDefaults standardUserDefaults] setObject:@(updateFrequency) forKey:VWWUserDefaultsUpdateFrequencyKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 +(VWWUnitType)units{
     NSNumber *unitsNumber = [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsUnitsKey];
     return (VWWUnitType)(unitsNumber ? unitsNumber.integerValue : 0);
@@ -98,5 +110,8 @@ static NSString *VWWUserDefaultsOffsetKey = @"offset";
     [[NSUserDefaults standardUserDefaults] setObject:@((NSUInteger)offset) forKey:VWWUserDefaultsOffsetKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
+
 
 @end

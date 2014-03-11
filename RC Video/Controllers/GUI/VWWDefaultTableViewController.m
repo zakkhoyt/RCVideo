@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *logAttitudeSwitch;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *offsetSegment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *unitsSegment;
+@property (weak, nonatomic) IBOutlet UISlider *updateFrequencySlider;
+
 @end
 
 @implementation VWWDefaultTableViewController
@@ -46,6 +48,9 @@
     self.logAttitudeSwitch.on = [VWWUserDefaults logAttitude];
     self.offsetSegment.selectedSegmentIndex = [VWWUserDefaults offset];
     self.unitsSegment.selectedSegmentIndex = [VWWUserDefaults units];
+    self.updateFrequencySlider.minimumValue = 1;
+    self.updateFrequencySlider.maximumValue = 30;
+    self.updateFrequencySlider.value = [VWWUserDefaults updateFrequency];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +86,9 @@
     [VWWUserDefaults setUnits:(VWWUnitType)sender.selectedSegmentIndex];
 }
 
+- (IBAction)updateFrequencySliderValueChanged:(UISlider*)sender {
+    [VWWUserDefaults setUpdateFrequency:sender.value];
+}
 
 
 @end

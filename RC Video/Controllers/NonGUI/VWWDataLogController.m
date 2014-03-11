@@ -29,6 +29,11 @@
 
 @property (nonatomic, strong) CLLocation *calibrateLocation;
 @property (nonatomic, strong) CLHeading *calibrateHeading;
+@property (nonatomic, strong) CMAccelerometerData *calibrateAccelerometers;
+@property (nonatomic, strong) CMGyroData *calibrateGyroscopes;
+@property (nonatomic, strong) CMMagnetometerData *calibrateMagnetometers;
+@property (nonatomic, strong) CMDeviceMotion* calibrateAttitude;
+
 @end
 
 @implementation VWWDataLogController
@@ -48,7 +53,7 @@
         self.locationController.delegate = self;
         self.motionController = [VWWMotionController sharedInstance];
         self.motionController.delegate = self;
-        self.motionController.updateInterval = 1/5.0f;
+        self.motionController.updateInterval = 1/(float)[VWWUserDefaults updateFrequency];
         self.data = [[NSMutableArray alloc]initWithCapacity:1200]; // at two/second this is 10 minutes
         
         [self.motionController startAll];
@@ -59,7 +64,7 @@
 }
 
 -(void)start{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1/5.0f target:self selector:@selector(logDataPoint) userInfo:Nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1/(float)[VWWUserDefaults updateFrequency] target:self selector:@selector(logDataPoint) userInfo:Nil repeats:YES];
 }
 -(void)stop{
     //    [self.motionController stopAll];
@@ -76,8 +81,18 @@
     if(self.heading){
         self.calibrateHeading = [self.heading copy];
     }
-    
-    VWW_LOG_TODO_TASK(@"Calibrate the motion sensors here");
+    if(self.accelerometers){
+        self.calibrateAccelerometers = [self.accelerometers copy];
+    }
+    if(self.gyroscopes){
+        self.calibrateGyroscopes = [self.gyroscopes copy];
+    }
+    if(self.magnetometers){
+        self.calibrateMagnetometers = [self.magnetometers copy];
+    }
+    if(self.attitude){
+        self.calibrateAttitude = [self.attitude copy];
+    }
 }
 
 
@@ -115,40 +130,84 @@
         if(self.location){
 
             // Latitude/Longitude or distance
-            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
-                [logString appendFormat:@"latitude: %.4f\n", self.location.coordinate.latitude];
-                [logString appendFormat:@"longitude: %.4f\n", self.location.coordinate.longitude];
-            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                float deltaCoordinate = [VWWUtilities metersBetweenPointA:self.calibrateLocation pointB:self.location];
-                if([VWWUserDefaults units] == VWWUnitTypeMeters){
-                    [logString appendFormat:@"distance: %.1fm\n", deltaCoordinate];
-                } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
-                    deltaCoordinate = [VWWUtilities metersToFeet:deltaCoordinate];
-                    [logString appendFormat:@"distance: %.1ff\n", deltaCoordinate];
+            if([VWWUserDefaults logGPS]){
+                [logString appendFormat:@"--------------- GPS ----------------\n"];
+                if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
+                    [logString appendFormat:@"latitude: %.4f\n", self.location.coordinate.latitude];
+                    [logString appendFormat:@"longitude: %.4f\n", self.location.coordinate.longitude];
+                } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
+                    float deltaCoordinate = [VWWUtilities metersBetweenPointA:self.calibrateLocation pointB:self.location];
+                    if([VWWUserDefaults units] == VWWUnitTypeMeters){
+                        [logString appendFormat:@"distance: %.1fm\n", deltaCoordinate];
+                    } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
+                        deltaCoordinate = [VWWUtilities metersToFeet:deltaCoordinate];
+                        [logString appendFormat:@"distance: %.1ff\n", deltaCoordinate];
+                    }
                 }
                 
-            }
-            
-            // Altitude
-            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
-                [logString appendFormat:@"altitude: %.1fm\n", self.location.altitude];
-            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
-                float deltaAltitude = self.location.altitude - self.calibrateLocation.altitude;
-                if([VWWUserDefaults units] == VWWUnitTypeMeters){
-                    [logString appendFormat:@"altitude: %.1fm\n", deltaAltitude];
-                } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
-                    deltaAltitude = [VWWUtilities metersToFeet:deltaAltitude];
-                    [logString appendFormat:@"altitude: %.1ff\n", deltaAltitude];
+                // Altitude
+                if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
+                    [logString appendFormat:@"altitude: %.1fm\n", self.location.altitude];
+                } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
+                    float deltaAltitude = self.location.altitude - self.calibrateLocation.altitude;
+                    if([VWWUserDefaults units] == VWWUnitTypeMeters){
+                        [logString appendFormat:@"altitude: %.1fm\n", deltaAltitude];
+                    } else if([VWWUserDefaults units] == VWWUnitTypeFeet){
+                        deltaAltitude = [VWWUtilities metersToFeet:deltaAltitude];
+                        [logString appendFormat:@"altitude: %.1ff\n", deltaAltitude];
+                    }
                 }
             }
+            
+            // Heading
+            if([VWWUserDefaults logHeading]){
+                if(self.heading){
+                    [logString appendFormat:@"------------- Heading --------------\n"];
+                    [logString appendFormat:@"heading: %f\n", self.heading.magneticHeading];
+                }
+            }
+
+            
+            // Accelerometers
+            if([VWWUserDefaults logAccelerometers]){
+                [logString appendFormat:@"---------- Accelerometers ----------\n"];
+                [logString appendFormat:@"x: %.4f\n", self.accelerometers.acceleration.x];
+                [logString appendFormat:@"y: %.4f\n", self.accelerometers.acceleration.y];
+                [logString appendFormat:@"z: %.4f\n", self.accelerometers.acceleration.z];
+            }
+            
+            // Gyroscopes
+            if([VWWUserDefaults logGyroscopes]){
+                [logString appendFormat:@"------------ Gyroscopes ------------\n"];
+                [logString appendFormat:@"x: %.4f\n", self.gyroscopes.rotationRate.x];
+                [logString appendFormat:@"y: %.4f\n", self.gyroscopes.rotationRate.y];
+                [logString appendFormat:@"z: %.4f\n", self.gyroscopes.rotationRate.z];
+            }
+
+            // Magnetometers
+            if([VWWUserDefaults logMagnetometers]){
+                [logString appendFormat:@"---------- Magnetometers -----------\n"];
+                [logString appendFormat:@"x: %.4f\n", self.magnetometers.magneticField.x];
+                [logString appendFormat:@"y: %.4f\n", self.magnetometers.magneticField.y];
+                [logString appendFormat:@"z: %.4f\n", self.magnetometers.magneticField.z];
+            }
+
+            
+            // Attitude
+            if([VWWUserDefaults logAttitude]){
+                [logString appendFormat:@"------------- Attitude -------------\n"];
+//                [logString appendFormat:@"Att.x: %.4f\n", self.magnetometers.magneticField.x];
+//                [logString appendFormat:@"Att.y: %.4f\n", self.magnetometers.magneticField.y];
+//                [logString appendFormat:@"Att.z: %.4f\n", self.magnetometers.magneticField.z];
+            }
+
+            
+            
+            
         }
         
-        // Heading
-        if(self.heading){
-            //        if(heading.magneticHeading != 0){
-            [logString appendFormat:@"heading: %f\n", self.heading.magneticHeading];
-            //        }
-        }
+        
+        // Call delegate
         [self.delegate dataLogController:self didUpdateLogString:logString];
     }
     
