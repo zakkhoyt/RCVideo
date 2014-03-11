@@ -28,8 +28,15 @@
 +(BOOL)logAttitude;
 +(void)setLogAttitude:(BOOL)log;
 
-
 +(BOOL)overlayDataOnVideo;
 +(void)setOverlayDataOnVideo:(BOOL)overlay;
+
++(VWWUnitType)units;
++(void)setUnits:(VWWUnitType)units;
+
++(VWWOffsetType)offset;
++(void)setOffset:(VWWOffsetType)offset;
+
+
 
 @end

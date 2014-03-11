@@ -15,6 +15,9 @@ static NSString *VWWUserDefaultsLogGryoscopesKey = @"logGyroscopes";
 static NSString *VWWUserDefaultsLogMagnetometersKey = @"logMagnetometers";
 static NSString *VWWUserDefaultsLogAttitudeKey = @"logAttitude";
 static NSString *VWWUserDefaultsLogOverlayDataOnVideoKey = @"overlayDataOnVideo";
+static NSString *VWWUserDefaultsUnitsKey = @"units";
+static NSString *VWWUserDefaultsOffsetKey = @"offset";
+
 
 @implementation VWWUserDefaults
 
@@ -78,5 +81,22 @@ static NSString *VWWUserDefaultsLogOverlayDataOnVideoKey = @"overlayDataOnVideo"
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(VWWUnitType)units{
+    NSNumber *unitsNumber = [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsUnitsKey];
+    return (VWWUnitType)(unitsNumber ? unitsNumber.integerValue : 0);
+}
++(void)setUnits:(VWWUnitType)units{
+    [[NSUserDefaults standardUserDefaults] setObject:@((NSUInteger)units) forKey:VWWUserDefaultsUnitsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(VWWOffsetType)offset{
+    NSNumber *offsetNumber = [[NSUserDefaults standardUserDefaults] objectForKey:VWWUserDefaultsOffsetKey];
+    return (VWWOffsetType)(offsetNumber ? offsetNumber.integerValue : 0);
+}
++(void)setOffset:(VWWOffsetType)offset{
+    [[NSUserDefaults standardUserDefaults] setObject:@((NSUInteger)offset) forKey:VWWUserDefaultsOffsetKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 @end

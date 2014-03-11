@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *logGyroscopesSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *logMagnetometersSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *logAttitudeSwitch;
-
+@property (weak, nonatomic) IBOutlet UISegmentedControl *offsetSegment;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *unitsSegment;
 @end
 
 @implementation VWWDefaultTableViewController
@@ -43,6 +44,8 @@
     self.logGyroscopesSwitch.on = [VWWUserDefaults logGyroscopes];
     self.logMagnetometersSwitch.on = [VWWUserDefaults logMagnetometers];
     self.logAttitudeSwitch.on = [VWWUserDefaults logAttitude];
+    self.offsetSegment.selectedSegmentIndex = [VWWUserDefaults offset];
+    self.unitsSegment.selectedSegmentIndex = [VWWUserDefaults units];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,5 +74,13 @@
 - (IBAction)logAttitudeSwitchValueChanged:(UISwitch*)sender {
     [VWWUserDefaults setLogAttitude:sender.on];
 }
+- (IBAction)offsetSegmentValueChanged:(UISegmentedControl*)sender {
+    [VWWUserDefaults setOffset:(VWWOffsetType)sender.selectedSegmentIndex];
+}
+- (IBAction)unitsSegmentValueChanged:(UISegmentedControl*)sender {
+    [VWWUserDefaults setUnits:(VWWUnitType)sender.selectedSegmentIndex];
+}
+
+
 
 @end

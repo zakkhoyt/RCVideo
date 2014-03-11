@@ -13,7 +13,10 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "VWWDefines.h"
     #import "VWWUtilities.h"
+    #import "VWWTypes.h"
     #import "VWWUserDefaults.h"
     #import "VWWBlocks.h"
+
 #endif

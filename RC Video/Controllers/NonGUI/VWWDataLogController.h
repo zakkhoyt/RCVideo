@@ -32,6 +32,7 @@ static NSString *VWWDataLogControllerDateKey = @"date";
 
 @protocol VWWDataLogControllerDelegate <NSObject>
 -(void)dataLogController:(VWWDataLogController*)sender didLogDataPoint:(NSDictionary*)dataPoint;
+-(void)dataLogController:(VWWDataLogController *)sender didUpdateLogString:(NSString*)logString;
 @end
 
 @interface VWWDataLogController : NSObject

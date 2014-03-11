@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6174F2118CE887900D3B06F /* VWWUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C6174F2018CE887900D3B06F /* VWWUtilities.m */; };
 		C6204E1818CE4289007B8986 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6204E1718CE4289007B8986 /* Foundation.framework */; };
 		C6204E1A18CE4289007B8986 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6204E1918CE4289007B8986 /* CoreGraphics.framework */; };
 		C6204E1C18CE4289007B8986 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6204E1B18CE4289007B8986 /* UIKit.framework */; };
@@ -51,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C6174F1F18CE887900D3B06F /* VWWUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWUtilities.h; sourceTree = "<group>"; };
+		C6174F2018CE887900D3B06F /* VWWUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWUtilities.m; sourceTree = "<group>"; };
+		C6174F2218CE889F00D3B06F /* VWWDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWDefines.h; sourceTree = "<group>"; };
+		C6174F2318CE8A2600D3B06F /* VWWTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VWWTypes.h; sourceTree = "<group>"; };
 		C6204E1418CE4289007B8986 /* RC Video.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RC Video.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6204E1718CE4289007B8986 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C6204E1918CE4289007B8986 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -84,14 +89,12 @@
 		C6204E5D18CE42F9007B8986 /* VWWCommonVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWCommonVideoViewController.m; sourceTree = "<group>"; };
 		C6204E6618CE4370007B8986 /* VWWUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWUserDefaults.h; sourceTree = "<group>"; };
 		C6204E6718CE4370007B8986 /* VWWUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWUserDefaults.m; sourceTree = "<group>"; };
-		C6204E6818CE4370007B8986 /* VWWUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWUtilities.h; sourceTree = "<group>"; };
 		C6204E6A18CE4370007B8986 /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
 		C6204E6B18CE4370007B8986 /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
 		C6204E6E18CE46F2007B8986 /* VWWDefaultTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWDefaultTableViewController.h; sourceTree = "<group>"; };
 		C6204E6F18CE46F2007B8986 /* VWWDefaultTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWDefaultTableViewController.m; sourceTree = "<group>"; };
 		C6204E7218CE4992007B8986 /* VWWCaptureVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWCaptureVideoViewController.h; sourceTree = "<group>"; };
 		C6204E7318CE4992007B8986 /* VWWCaptureVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWCaptureVideoViewController.m; sourceTree = "<group>"; };
-		C695862318CE4E9500835E64 /* VWWUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWUtilities.h; sourceTree = "<group>"; };
 		C695862618CE4F9500835E64 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C695862718CE4F9500835E64 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C695862A18CE517500835E64 /* VWWMotionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWMotionController.h; sourceTree = "<group>"; };
@@ -134,6 +137,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C6174F1E18CE831300D3B06F /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				C6204E6E18CE46F2007B8986 /* VWWDefaultTableViewController.h */,
+				C6204E6F18CE46F2007B8986 /* VWWDefaultTableViewController.m */,
+			);
+			name = Default;
+			sourceTree = "<group>";
+		};
 		C6204E0B18CE4289007B8986 = {
 			isa = PBXGroup;
 			children = (
@@ -225,9 +237,8 @@
 		C6204E5118CE42F9007B8986 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				C6204E6E18CE46F2007B8986 /* VWWDefaultTableViewController.h */,
-				C6204E6F18CE46F2007B8986 /* VWWDefaultTableViewController.m */,
 				C6204E7518CE4997007B8986 /* Capture */,
+				C6174F1E18CE831300D3B06F /* Default */,
 				C6204E7118CE47EB007B8986 /* Render */,
 			);
 			path = GUI;
@@ -251,7 +262,8 @@
 			children = (
 				C6204E6618CE4370007B8986 /* VWWUserDefaults.h */,
 				C6204E6718CE4370007B8986 /* VWWUserDefaults.m */,
-				C6204E6818CE4370007B8986 /* VWWUtilities.h */,
+				C6174F1F18CE887900D3B06F /* VWWUtilities.h */,
+				C6174F2018CE887900D3B06F /* VWWUtilities.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -305,8 +317,9 @@
 		C695862218CE4E9500835E64 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				C6174F2218CE889F00D3B06F /* VWWDefines.h */,
 				C695863518CE53E700835E64 /* VWWBlocks.h */,
-				C695862318CE4E9500835E64 /* VWWUtilities.h */,
+				C6174F2318CE8A2600D3B06F /* VWWTypes.h */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -460,6 +473,7 @@
 				C695863318CE530900835E64 /* VWWMotion.m in Sources */,
 				C695863818CE573600835E64 /* VWWDataLogController.m in Sources */,
 				C6204E7418CE4992007B8986 /* VWWCaptureVideoViewController.m in Sources */,
+				C6174F2118CE887900D3B06F /* VWWUtilities.m in Sources */,
 				C6204E6418CE42F9007B8986 /* VWWCommonVideoViewController.m in Sources */,
 				C6204E6318CE42F9007B8986 /* VWWAddTiltViewController.m in Sources */,
 				C695862F18CE518100835E64 /* VWWLocationController.m in Sources */,

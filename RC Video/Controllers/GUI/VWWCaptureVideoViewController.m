@@ -11,6 +11,7 @@
 #import "VWWCaptureVideoViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "VWWDataLogController.h"
+#import "NSTimer+Blocks.h"
 
 static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 
@@ -61,6 +62,9 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     
     
     [self startCamera];
+    [NSTimer scheduledTimerWithTimeInterval:3.0 block:^{
+        [self.dataLogController calibrate];
+    } repeats:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,6 +87,10 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 ////        [self showColorView];
 //    }
 //}
+
+- (IBAction)calibrateButtonTouchUpInside:(id)sender {
+    [self.dataLogController calibrate];
+}
 
 - (IBAction)startButtonTouchUpInside:(id)sender {
     if(self.isRecording == YES){
@@ -407,34 +415,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 #pragma mark VWWDataLogControllerDelegate
 -(void)dataLogController:(VWWDataLogController*)sender didLogDataPoint:(NSDictionary*)dataPoint{
-    NSMutableString *overlayString = [[NSMutableString alloc]initWithString:@""];
-    
-    
-    CLLocation *location = dataPoint[VWWDataLogControllerLocationKey];
-    if(location){
-//        if(location.coordinate.latitude != 0) {
-            [overlayString appendFormat:@"latitude: %.4f\n", location.coordinate.latitude];
-//        }
-//        if(location.coordinate.longitude != 0){
-            [overlayString appendFormat:@"longitude: %.4f\n", location.coordinate.longitude];
-//        }
-//        if(location.altitude != 0){
-            [overlayString appendFormat:@"altitude: %.1fm\n", location.altitude];
-//        }
-    }
-    
-    CLHeading *heading = dataPoint[VWWDataLogControllerHeadingKey];
-    if(heading){
-//        if(heading.magneticHeading != 0){
-            [overlayString appendFormat:@"heading: %f\n", heading.magneticHeading];
-//        }
-    }
-    
-    
-    
-    self.overlayLabel.text = overlayString;
 }
 
+-(void)dataLogController:(VWWDataLogController *)sender didUpdateLogString:(NSString*)logString{
+    self.overlayLabel.text = logString;
+}
 
 
 

@@ -26,6 +26,9 @@
 @property (nonatomic, strong) CLHeading *heading;
 @property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) CLLocation *calibrateLocation;
+@property (nonatomic, strong) CLHeading *calibrateHeading;
 @end
 
 @implementation VWWDataLogController
@@ -50,7 +53,7 @@
         
         [self.motionController startAll];
         [self.locationController start];
-
+        
     }
     return self;
 }
@@ -59,21 +62,31 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1/5.0f target:self selector:@selector(logDataPoint) userInfo:Nil repeats:YES];
 }
 -(void)stop{
-//    [self.motionController stopAll];
-//    [self.locationController stop];
+    //    [self.motionController stopAll];
+    //    [self.locationController stop];
     
     [self.timer invalidate];
     _timer = nil;
 }
 
 -(void)calibrate{
-    VWW_LOG_TODO;
+    if(self.location){
+        self.calibrateLocation = [self.location copy];
+    }
+    if(self.heading){
+        self.calibrateHeading = [self.heading copy];
+    }
+    
+    VWW_LOG_TODO_TASK(@"Calibrate the motion sensors here");
 }
+
+
 
 
 #pragma mark Private methods
 -(void)logDataPoint{
     @autoreleasepool {
+        // Create log entry
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         if(self.location){
             [dictionary setObject:self.location forKey:VWWDataLogControllerLocationKey];
@@ -97,8 +110,44 @@
         [self.data addObject:dictionary];
         [self.delegate dataLogController:self didLogDataPoint:dictionary];
         
+        // Update data log string for delegate
+        NSMutableString *logString = [[NSMutableString alloc]initWithString:@""];
+        if(self.location){
+            //        if(location.coordinate.latitude != 0) {
+            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
+                [logString appendFormat:@"latitude: %.4f\n", self.location.coordinate.latitude];
+            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
+                [logString appendFormat:@"latitude: TODO\n"];
+            }
+            
+            //        }
+            //        if(location.coordinate.longitude != 0){
+            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
+                [logString appendFormat:@"longitude: %.4f\n", self.location.coordinate.longitude];
+            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
+                [logString appendFormat:@"longitude: TODO\n"];
+            }
+            
+            //        }
+            //        if(location.altitude != 0){
+            if([VWWUserDefaults offset] == VWWOffsetTypeAbsolute){
+                [logString appendFormat:@"altitude: %.1fm\n", self.location.altitude];
+            } else if([VWWUserDefaults offset] == VWWOffsetTypeDelta){
+                [logString appendFormat:@"altitude: TODO\n"];
+            }
+            
+            //        }
+        }
+        
+        
+        if(self.heading){
+            //        if(heading.magneticHeading != 0){
+            [logString appendFormat:@"heading: %f\n", self.heading.magneticHeading];
+            //        }
+        }
+        [self.delegate dataLogController:self didUpdateLogString:logString];
     }
-
+    
 }
 
 

@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-Xz-GtF" userLabel="View - Camera">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ACA-Xz-GtF" userLabel="View - Camera">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,24 +58,38 @@
                                     <action selector="startButtonTouchUpInside:" destination="CAW-oF-bwu" eventType="touchUpInside" id="4c1-OV-JFK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="muj-EV-yjD">
+                                <rect key="frame" x="20" y="480" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Calibrate">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="calibrateButtonTouchUpInside:" destination="CAW-oF-bwu" eventType="touchUpInside" id="V1P-5q-gSW"/>
+                                    <action selector="startButtonTouchUpInside:" destination="CAW-oF-bwu" eventType="touchUpInside" id="23b-4l-giI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="leading" secondItem="TPE-R8-u8t" secondAttribute="leading" id="8p8-BQ-pl2"/>
+                            <constraint firstItem="qvL-SA-NlC" firstAttribute="top" secondItem="muj-EV-yjD" secondAttribute="bottom" constant="8" symbolic="YES" id="1qy-I0-Zv1"/>
                             <constraint firstItem="qvL-SA-NlC" firstAttribute="leading" secondItem="TPE-R8-u8t" secondAttribute="leading" constant="20" id="9N8-uY-3ZS"/>
                             <constraint firstItem="tni-zm-96C" firstAttribute="top" secondItem="tb8-Ao-TwC" secondAttribute="bottom" id="BZm-c7-wNf"/>
                             <constraint firstItem="tb8-Ao-TwC" firstAttribute="top" secondItem="eJI-mI-yWg" secondAttribute="bottom" constant="-64" id="Ncp-ZO-RpB"/>
+                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="trailing" secondItem="tb8-Ao-TwC" secondAttribute="trailing" id="P3j-Us-Ir8"/>
                             <constraint firstItem="tni-zm-96C" firstAttribute="top" secondItem="qvL-SA-NlC" secondAttribute="bottom" constant="20" id="R71-vg-d5D"/>
-                            <constraint firstItem="tni-zm-96C" firstAttribute="top" secondItem="ACA-Xz-GtF" secondAttribute="bottom" id="SfE-8S-RzQ"/>
+                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="bottom" secondItem="tb8-Ao-TwC" secondAttribute="bottom" id="RYk-rt-S6V"/>
+                            <constraint firstItem="muj-EV-yjD" firstAttribute="leading" secondItem="qvL-SA-NlC" secondAttribute="leading" id="WOX-g4-dYg"/>
                             <constraint firstItem="tb8-Ao-TwC" firstAttribute="leading" secondItem="TPE-R8-u8t" secondAttribute="leading" id="XTR-lS-Qg1"/>
-                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="top" secondItem="eJI-mI-yWg" secondAttribute="bottom" id="d76-s6-HhK"/>
+                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="leading" secondItem="tb8-Ao-TwC" secondAttribute="leading" id="f9y-KU-lQZ"/>
+                            <constraint firstItem="muj-EV-yjD" firstAttribute="trailing" secondItem="qvL-SA-NlC" secondAttribute="trailing" id="hRx-25-kG0"/>
                             <constraint firstAttribute="trailing" secondItem="tb8-Ao-TwC" secondAttribute="trailing" id="jyC-RE-0p4"/>
-                            <constraint firstAttribute="trailing" secondItem="ACA-Xz-GtF" secondAttribute="trailing" id="p4N-Ra-Lw6"/>
+                            <constraint firstItem="ACA-Xz-GtF" firstAttribute="top" secondItem="tb8-Ao-TwC" secondAttribute="top" id="tSH-mi-eOV"/>
                             <constraint firstAttribute="trailing" secondItem="qvL-SA-NlC" secondAttribute="trailing" constant="20" id="uoR-9b-bUf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="CLY-jJ-TKz">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="sug-6e-WOn">
+                        <barButtonItem key="rightBarButtonItem" id="sug-6e-WOn">
                             <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="nIh-ob-Ga7">
                                 <rect key="frame" x="255" y="6" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -246,8 +260,50 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IHr-fv-JBW">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="rSy-E8-4ta">
                                         <rect key="frame" x="0.0" y="328" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rSy-E8-4ta" id="xQf-ZF-1Sk">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-Ql-Oja">
+                                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <segments>
+                                                        <segment title="Absolute"/>
+                                                        <segment title="Delta"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="offsetSegmentValueChanged:" destination="PfS-of-bAy" eventType="valueChanged" id="VlE-x9-sdZ"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kyl-6b-iQB">
+                                        <rect key="frame" x="0.0" y="372" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kyl-6b-iQB" id="WS9-KV-VaI">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="grY-AL-lbe">
+                                                    <rect key="frame" x="20" y="8" width="280" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <segments>
+                                                        <segment title="Meters"/>
+                                                        <segment title="Feet"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="unitsSegmentValueChanged:" destination="PfS-of-bAy" eventType="valueChanged" id="Afk-vb-xvA"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IHr-fv-JBW">
+                                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IHr-fv-JBW" id="RIB-u1-3Md">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -267,7 +323,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="f3Z-42-DSu">
-                                        <rect key="frame" x="0.0" y="372" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="460" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f3Z-42-DSu" id="bLc-iQ-W5M">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -302,6 +358,8 @@
                         <outlet property="logGyroscopesSwitch" destination="oIJ-OP-ErM" id="XQh-Qj-DeH"/>
                         <outlet property="logHeadingSwitch" destination="clS-SA-lkk" id="Wso-vG-Eq6"/>
                         <outlet property="logMagnetometersSwitch" destination="pzu-j4-ZaM" id="tqv-1u-yUU"/>
+                        <outlet property="offsetSegment" destination="dcZ-Ql-Oja" id="VWk-32-9SS"/>
+                        <outlet property="unitsSegment" destination="grY-AL-lbe" id="OTv-oO-IzO"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p7b-Y2-zxS" userLabel="First Responder" sceneMemberID="firstResponder"/>
