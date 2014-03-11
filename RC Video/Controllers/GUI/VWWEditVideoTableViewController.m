@@ -9,7 +9,7 @@
 #import "VWWEditVideoTableViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "VWWAddSubtitleViewController.h"
-
+#import "VWWFileController.h"
 static NSString *VWWSegueEditToText = @"VWWSegueEditToText";
 
 
@@ -74,6 +74,12 @@ static NSString *VWWSegueEditToText = @"VWWSegueEditToText";
         [alert show];
     }
 }
+
+#pragma mark IBActions
+- (IBAction)printButtonTouchUpInside:(id)sender {
+    [VWWFileController printURLsForVideos];
+}
+
 
 
 #pragma UITableViewDelegate

@@ -23,6 +23,23 @@
     return url.path;
 }
 
++(void)printURLsForVideos{
+    VWW_LOG_INFO(@"Video files:\n");
+    NSURL *documentsDirURL = [VWWFileController urlForDocumentsDirectory];
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:documentsDirURL includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
+
+    for(int index = 0; index < files.count; index++){
+        NSURL *fileURL = [files objectAtIndex:index];
+        NSString *file = fileURL.path;
+        if([[file pathExtension] compare:@"mov"] == NSOrderedSame){
+            NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:file error:&error];
+            UInt32 size = (UInt32)[attrs fileSize];
+            NSLog(@"size: %ld: path: %@", (long)size, file);
+        }
+    }
+}
+
 // file:///var/mobile/Applications/FD5AEE23-DDB5-401E-A616-83DA8C9F2778/Documents/FinalVideo-431.mov
 +(NSArray*)urlsForVideos{
     NSURL *documentsDirURL = [VWWFileController urlForDocumentsDirectory];

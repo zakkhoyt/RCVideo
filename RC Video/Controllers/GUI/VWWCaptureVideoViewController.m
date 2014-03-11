@@ -36,7 +36,10 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 @property (nonatomic, strong) AVCaptureVideoDataOutput *videoOutput;
 @property (nonatomic, strong) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic, strong) AVCaptureDevice *device;
+@property (nonatomic, strong) AVAssetWriter *videoWriter;
+@property (nonatomic, strong) AVAssetWriterInput* writerInput;
 //@property (nonatomic, strong) AVCaptureConnection *connection;
+@property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *adaptor;
 @end
 
 @implementation VWWCaptureVideoViewController
@@ -55,6 +58,7 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     [super viewDidLoad];
     self.avqueue = dispatch_queue_create("com.vaporwarewolf.avfoundation", NULL);
     [self setupCaptureSession];
+    [self setupAssetWriter];
 }
 
 
@@ -131,11 +135,14 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     NSURL *url = [NSURL fileURLWithPath:myPathDocs];
     
     [self.movieFileOutput startRecordingToOutputFileURL:url recordingDelegate:self];
+    [self startAssetWriter];
+    
 }
 
 -(void)stopRecording{
     [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
     [self.movieFileOutput stopRecording];
+    [self stopAssetWriter];
     // VC is presented from recording delegate
 }
 
@@ -151,13 +158,78 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 }
 
 
+// Forum on AVAssetWriter: http://stackoverflow.com/questions/3741323/how-do-i-export-uiimage-array-as-a-movie/3742212#3742212
+// An example post for creating from an array of images: http://www.developers-life.com/create-movie-from-array-of-images.html
+-(void)setupAssetWriter{
+    NSError *error = nil;
+    NSString *myPathDocs =  [[VWWFileController pathForDocumentsDirectory] stringByAppendingPathComponent:
+                             [NSString stringWithFormat:@"AssetWriter-%d.mov",arc4random() % 1000]];
+    NSURL *url = [NSURL fileURLWithPath:myPathDocs];
+
+    self.videoWriter = [[AVAssetWriter alloc] initWithURL:url fileType:AVFileTypeQuickTimeMovie error:&error];
+    NSParameterAssert(self.videoWriter);
+    
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   AVVideoCodecH264, AVVideoCodecKey,
+                                   [NSNumber numberWithInt:640], AVVideoWidthKey,
+                                   [NSNumber numberWithInt:480], AVVideoHeightKey,
+                                   nil];
+    
+    self.writerInput = [AVAssetWriterInput
+                                        assetWriterInputWithMediaType:AVMediaTypeVideo
+                                        outputSettings:videoSettings];
+    
+    
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+    [attributes setObject:[NSNumber numberWithUnsignedInt:kCVPixelFormatType_32ARGB] forKey:(NSString*)kCVPixelBufferPixelFormatTypeKey];
+    [attributes setObject:[NSNumber numberWithUnsignedInt:640] forKey:(NSString*)kCVPixelBufferWidthKey];
+    [attributes setObject:[NSNumber numberWithUnsignedInt:480] forKey:(NSString*)kCVPixelBufferHeightKey];
+    
+    self.adaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:self.writerInput
+                                                                                    sourcePixelBufferAttributes:attributes];
+    
+    // fixes all errors
+    self.writerInput.expectsMediaDataInRealTime = YES;
+    
+    NSParameterAssert(self.writerInput);
+    NSParameterAssert([self.videoWriter canAddInput:self.writerInput]);
+    [self.videoWriter addInput:self.writerInput];
+    
+    
+    
+}
+
+
+-(void)startAssetWriter{
+    [self.videoWriter startWriting];
+    [self.videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+}
+
+-(void)stopAssetWriter{
+    [self.writerInput markAsFinished];
+    [self.videoWriter endSessionAtSourceTime:CMTimeMake(1, 100)];
+    [self.videoWriter finishWritingWithCompletionHandler:^{
+        VWW_LOG_DEBUG(@"Finished writing AVAssetWriter");
+    }];
+}
+
 -(void)setupCaptureSession{
     self.session = [[AVCaptureSession alloc] init];
     self.session.sessionPreset = AVCaptureSessionPresetMedium;
     
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    NSError *error = nil;
+    NSError *error;
+    [self.device lockForConfiguration:&error];
+
+    if(error){
+        VWW_LOG_WARNING(@"Cannot lock device to set framerate");
+    } else {
+        self.device.activeVideoMinFrameDuration = CMTimeMake(1, 5);
+        self.device.activeVideoMaxFrameDuration  = CMTimeMake(1, 5);
+    }
+    error = nil;
+
     self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
     
     if (!self.input) {
@@ -253,6 +325,52 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 }
 
 
+- (CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image
+{
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,
+                             nil];
+    CVPixelBufferRef pxbuffer = NULL;
+    
+    CVPixelBufferCreate(kCFAllocatorDefault, CGImageGetWidth(image),
+                        CGImageGetHeight(image), kCVPixelFormatType_32ARGB, (__bridge CFDictionaryRef) options,
+                        &pxbuffer);
+    
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pxdata, CGImageGetWidth(image),
+                                                 CGImageGetHeight(image), 8, 4*CGImageGetWidth(image), rgbColorSpace,
+                                                 (CGBitmapInfo)kCGImageAlphaNoneSkipFirst);
+    
+    CGContextConcatCTM(context, CGAffineTransformMakeRotation(0));
+    
+    CGAffineTransform flipVertical = CGAffineTransformMake(
+                                                           1, 0, 0, -1, 0, CGImageGetHeight(image)
+                                                           );
+    CGContextConcatCTM(context, flipVertical);
+    
+    
+    
+    CGAffineTransform flipHorizontal = CGAffineTransformMake(
+                                                             -1.0, 0.0, 0.0, 1.0, CGImageGetWidth(image), 0.0
+                                                             );
+    
+    CGContextConcatCTM(context, flipHorizontal);
+    
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image),
+                                           CGImageGetHeight(image)), image);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    
+    return pxbuffer;
+}
+
 
 #pragma mark AVCaptureVideoDataOutputSampleBufferDelegate
 
@@ -298,6 +416,30 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
 //    // Create an image object from the Quartz image
 //    UIImage *image = [UIImage imageWithCGImage:quartzImage];
+    
+    
+    // Or you can use AVAssetWriterInputPixelBufferAdaptor.
+    // That lets you feed the writer input data from a CVPixelBuffer
+    // that’s quite easy to create from a CGImage.
+//    if([self.writerInput appendSampleBuffer:sampleBuffer] == NO){
+//        VWW_LOG_WARNING(@"could not append sample buffer");
+//    }
+    static int i = 0;
+    int fps = 30;
+    CMTime frameTime = CMTimeMake(1, fps);
+    CMTime lastTime=CMTimeMake(i, fps);
+    CMTime presentTime=CMTimeAdd(lastTime, frameTime);
+    
+    BOOL result = [self.adaptor appendPixelBuffer:[self pixelBufferFromCGImage:quartzImage] withPresentationTime:presentTime];
+    
+    if (result == NO) //failes on 3GS, but works on iphone 4
+    {
+        NSLog(@"failed to append buffer");
+        NSLog(@"The error is %@", [self.videoWriter error]);
+    }
+    i++;
+
+    
     
     // Release the Quartz image
     CGImageRelease(quartzImage);

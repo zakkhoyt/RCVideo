@@ -11,7 +11,7 @@
 @interface VWWFileController : NSObject
 +(NSURL*)urlForDocumentsDirectory;
 +(NSString*)pathForDocumentsDirectory;
-
++(void)printURLsForVideos;
 +(NSArray*)urlsForVideos;
 +(BOOL)deleteVideoAtURL:(NSURL*)url;
 +(BOOL)deleteAllVideos;
