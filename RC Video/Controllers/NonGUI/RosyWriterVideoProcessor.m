@@ -365,7 +365,7 @@
 	for( int row = 0; row < bufferHeight; row++ ) {
 		for( int column = 0; column < bufferWidth; column++ ) {
 			//pixel[1] = 0; // De-green (second pixel in BGRA is green)
-            if(pixel[0] < 0x30){
+            if(pixel[0] < 0x50){
                 pixel[0] = 0x00;
                 pixel[1] = 0xFF;
                 pixel[2] = 0x00;

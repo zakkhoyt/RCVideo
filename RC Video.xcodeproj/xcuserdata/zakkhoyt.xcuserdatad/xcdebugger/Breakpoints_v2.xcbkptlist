@@ -131,12 +131,12 @@
                   symbolName = "-[RosyWriterVideoProcessor showError:]"
                   moduleName = "RC Video"
                   urlString = "file:///Users/zakkhoyt/Code/repositories/vww/RC%20Video/RC%20Video/Controllers/NonGUI/RosyWriterVideoProcessor.m"
-                  timestampString = "416445397.779567"
+                  timestampString = "416445820.719887"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "608"
                   endingLineNumber = "608"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "20">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -145,12 +145,12 @@
                   symbolName = "__38-[RosyWriterVideoProcessor showError:]_block_invoke"
                   moduleName = "RC Video"
                   urlString = "file:///Users/zakkhoyt/Code/repositories/vww/RC%20Video/RC%20Video/Controllers/NonGUI/RosyWriterVideoProcessor.m"
-                  timestampString = "416445397.779729"
+                  timestampString = "416445820.720203"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "609"
-                  endingLineNumber = "609"
-                  offsetFromSymbolStart = "126">
+                  startingLineNumber = "608"
+                  endingLineNumber = "608"
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>
