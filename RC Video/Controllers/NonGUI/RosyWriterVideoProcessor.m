@@ -366,9 +366,9 @@
 		for( int column = 0; column < bufferWidth; column++ ) {
 			//pixel[1] = 0; // De-green (second pixel in BGRA is green)
             if(pixel[0] < 0x30){
-                pixel[0] = 0xFF;
+                pixel[0] = 0x00;
                 pixel[1] = 0xFF;
-                pixel[2] = 0xFF;
+                pixel[2] = 0x00;
 //                pixel[3] = 0x00;
             }
 			pixel += BYTES_PER_PIXEL;
@@ -495,6 +495,7 @@
 	 * Create capture session
 	 */
     captureSession = [[AVCaptureSession alloc] init];
+//    captureSession.sessionPreset = AVCaptureSessionPresetMedium;
     
     /*
 	 * Create audio connection
@@ -550,7 +551,8 @@
 		[self showError:[NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil]];
 	
 	// Create serial queue for movie writing
-	movieWritingQueue = dispatch_queue_create("Movie Writing Queue", DISPATCH_QUEUE_SERIAL);
+//	movieWritingQueue = dispatch_queue_create("Movie Writing Queue", DISPATCH_QUEUE_SERIAL);
+    movieWritingQueue = dispatch_get_main_queue();
 	
     if ( !captureSession )
 		[self setupCaptureSession];

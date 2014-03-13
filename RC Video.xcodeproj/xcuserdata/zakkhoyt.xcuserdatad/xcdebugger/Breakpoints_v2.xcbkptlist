@@ -109,5 +109,51 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RC Video/Controllers/NonGUI/RosyWriterVideoProcessor.m"
+            timestampString = "416445397.730034"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
+            landmarkName = "-showError:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[RosyWriterVideoProcessor showError:]"
+                  moduleName = "RC Video"
+                  urlString = "file:///Users/zakkhoyt/Code/repositories/vww/RC%20Video/RC%20Video/Controllers/NonGUI/RosyWriterVideoProcessor.m"
+                  timestampString = "416445397.779567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "608"
+                  endingLineNumber = "608"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__38-[RosyWriterVideoProcessor showError:]_block_invoke"
+                  moduleName = "RC Video"
+                  urlString = "file:///Users/zakkhoyt/Code/repositories/vww/RC%20Video/RC%20Video/Controllers/NonGUI/RosyWriterVideoProcessor.m"
+                  timestampString = "416445397.779729"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "609"
+                  endingLineNumber = "609"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
