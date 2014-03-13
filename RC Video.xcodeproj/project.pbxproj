@@ -39,6 +39,11 @@
 		C695863318CE530900835E64 /* VWWMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863218CE530900835E64 /* VWWMotion.m */; };
 		C695863818CE573600835E64 /* VWWDataLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863718CE573600835E64 /* VWWDataLogController.m */; };
 		C695863B18CE5E9900835E64 /* VWWEditVideoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863A18CE5E9900835E64 /* VWWEditVideoTableViewController.m */; };
+		C6B78BF118D2503400A8E68A /* RosyWriterVideoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF018D2503400A8E68A /* RosyWriterVideoProcessor.m */; };
+		C6B78BF518D2559500A8E68A /* RosyWriterPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF418D2559500A8E68A /* RosyWriterPreviewView.m */; };
+		C6B78BF818D256A300A8E68A /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF618D256A300A8E68A /* ShaderUtilities.c */; };
+		C6B78BFC18D256DD00A8E68A /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = C6B78BFA18D256DD00A8E68A /* passThrough.fsh */; };
+		C6B78BFD18D256DD00A8E68A /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = C6B78BFB18D256DD00A8E68A /* passThrough.vsh */; };
 		CFEF645118CEB93E000EDB82 /* VWWFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEF645018CEB93E000EDB82 /* VWWFileController.m */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +115,16 @@
 		C695863718CE573600835E64 /* VWWDataLogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWDataLogController.m; sourceTree = "<group>"; };
 		C695863918CE5E9900835E64 /* VWWEditVideoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWEditVideoTableViewController.h; sourceTree = "<group>"; };
 		C695863A18CE5E9900835E64 /* VWWEditVideoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWEditVideoTableViewController.m; sourceTree = "<group>"; };
+		C6B78BEF18D2503400A8E68A /* RosyWriterVideoProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterVideoProcessor.h; sourceTree = "<group>"; };
+		C6B78BF018D2503400A8E68A /* RosyWriterVideoProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterVideoProcessor.m; sourceTree = "<group>"; };
+		C6B78BF318D2559500A8E68A /* RosyWriterPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterPreviewView.h; sourceTree = "<group>"; };
+		C6B78BF418D2559500A8E68A /* RosyWriterPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterPreviewView.m; sourceTree = "<group>"; };
+		C6B78BF618D256A300A8E68A /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
+		C6B78BF718D256A300A8E68A /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
+		C6B78BFA18D256DD00A8E68A /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
+		C6B78BFB18D256DD00A8E68A /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
+		C6B78BFE18D2598F00A8E68A /* VWWCaptureVideoViewController.m.old.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VWWCaptureVideoViewController.m.old.m; sourceTree = "<group>"; };
+		C6B78BFF18D2598F00A8E68A /* VWWCaptureVideoViewController.h.old.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VWWCaptureVideoViewController.h.old.h; sourceTree = "<group>"; };
 		CFEF644F18CEB93E000EDB82 /* VWWFileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWFileController.h; sourceTree = "<group>"; };
 		CFEF645018CEB93E000EDB82 /* VWWFileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWFileController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,10 +204,12 @@
 				C6204E2F18CE4289007B8986 /* Images.xcassets */,
 				C695862218CE4E9500835E64 /* Include */,
 				C695863018CE530900835E64 /* Model */,
+				C6B78BF918D256DD00A8E68A /* Shaders */,
 				C6204E1E18CE4289007B8986 /* Supporting Files */,
 				C695862418CE4F9500835E64 /* ThirdParty */,
 				C6204E7618CE49D3007B8986 /* UserInterface */,
 				C6204E6518CE4370007B8986 /* Utilities */,
+				C6B78BF218D2559500A8E68A /* View */,
 			);
 			path = "RC Video";
 			sourceTree = "<group>";
@@ -250,6 +267,7 @@
 		C6204E5E18CE42F9007B8986 /* NonGUI */ = {
 			isa = PBXGroup;
 			children = (
+				C6B78BEE18D2502900A8E68A /* Video */,
 				CFEF644E18CEB920000EDB82 /* Files */,
 				CFEF644D18CEB90F000EDB82 /* SensorData */,
 			);
@@ -259,6 +277,8 @@
 		C6204E6518CE4370007B8986 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C6B78BF618D256A300A8E68A /* ShaderUtilities.c */,
+				C6B78BF718D256A300A8E68A /* ShaderUtilities.h */,
 				C6204E6618CE4370007B8986 /* VWWUserDefaults.h */,
 				C6204E6718CE4370007B8986 /* VWWUserDefaults.m */,
 				C6174F1F18CE887900D3B06F /* VWWUtilities.h */,
@@ -299,6 +319,8 @@
 		C6204E7518CE4997007B8986 /* Capture */ = {
 			isa = PBXGroup;
 			children = (
+				C6B78BFE18D2598F00A8E68A /* VWWCaptureVideoViewController.m.old.m */,
+				C6B78BFF18D2598F00A8E68A /* VWWCaptureVideoViewController.h.old.h */,
 				C6204E7218CE4992007B8986 /* VWWCaptureVideoViewController.h */,
 				C6204E7318CE4992007B8986 /* VWWCaptureVideoViewController.m */,
 			);
@@ -357,6 +379,33 @@
 				C695863218CE530900835E64 /* VWWMotion.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C6B78BEE18D2502900A8E68A /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				C6B78BEF18D2503400A8E68A /* RosyWriterVideoProcessor.h */,
+				C6B78BF018D2503400A8E68A /* RosyWriterVideoProcessor.m */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
+		C6B78BF218D2559500A8E68A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C6B78BF318D2559500A8E68A /* RosyWriterPreviewView.h */,
+				C6B78BF418D2559500A8E68A /* RosyWriterPreviewView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C6B78BF918D256DD00A8E68A /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				C6B78BFA18D256DD00A8E68A /* passThrough.fsh */,
+				C6B78BFB18D256DD00A8E68A /* passThrough.vsh */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 		CFEF644D18CEB90F000EDB82 /* SensorData */ = {
@@ -458,8 +507,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6B78BFD18D256DD00A8E68A /* passThrough.vsh in Resources */,
 				C6204E3018CE4289007B8986 /* Images.xcassets in Resources */,
 				C6204E2218CE4289007B8986 /* InfoPlist.strings in Resources */,
+				C6B78BFC18D256DD00A8E68A /* passThrough.fsh in Resources */,
 				C6204E2B18CE4289007B8986 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,9 +537,12 @@
 				C695863B18CE5E9900835E64 /* VWWEditVideoTableViewController.m in Sources */,
 				C6204E2818CE4289007B8986 /* VWWAppDelegate.m in Sources */,
 				CFEF645118CEB93E000EDB82 /* VWWFileController.m in Sources */,
+				C6B78BF818D256A300A8E68A /* ShaderUtilities.c in Sources */,
 				C6204E6D18CE4370007B8986 /* NSTimer+Blocks.m in Sources */,
+				C6B78BF118D2503400A8E68A /* RosyWriterVideoProcessor.m in Sources */,
 				C695862C18CE517500835E64 /* VWWMotionController.m in Sources */,
 				C6204E5F18CE42F9007B8986 /* VWWAddAnimationViewController.m in Sources */,
+				C6B78BF518D2559500A8E68A /* RosyWriterPreviewView.m in Sources */,
 				C6204E6218CE42F9007B8986 /* VWWAddSubtitleViewController.m in Sources */,
 				C6204E6118CE42F9007B8986 /* VWWAddOverlayViewController.m in Sources */,
 				C695862818CE4F9500835E64 /* MBProgressHUD.m in Sources */,
