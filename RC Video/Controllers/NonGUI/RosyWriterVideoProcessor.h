@@ -51,36 +51,7 @@
 @protocol RosyWriterVideoProcessorDelegate;
 
 @interface RosyWriterVideoProcessor : NSObject <AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
-{
-    id <RosyWriterVideoProcessorDelegate> delegate;
-	
-	NSMutableArray *previousSecondTimestamps;
-	Float64 videoFrameRate;
-	CMVideoDimensions videoDimensions;
-	CMVideoCodecType videoType;
-    
-	AVCaptureSession *captureSession;
-	AVCaptureConnection *audioConnection;
-	AVCaptureConnection *videoConnection;
-	CMBufferQueueRef previewBufferQueue;
-	
-	NSURL *movieURL;
-	AVAssetWriter *assetWriter;
-	AVAssetWriterInput *assetWriterAudioIn;
-	AVAssetWriterInput *assetWriterVideoIn;
-	dispatch_queue_t movieWritingQueue;
-    
-	AVCaptureVideoOrientation referenceOrientation;
-	AVCaptureVideoOrientation videoOrientation;
-    
-	// Only accessed on movie writing queue
-    BOOL readyToRecordAudio;
-    BOOL readyToRecordVideo;
-	BOOL recordingWillBeStarted;
-	BOOL recordingWillBeStopped;
-    
-	BOOL recording;
-}
+
 
 @property (readwrite, assign) id <RosyWriterVideoProcessorDelegate> delegate;
 

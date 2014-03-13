@@ -64,7 +64,31 @@
 
 @end
 
-@implementation RosyWriterVideoProcessor
+@implementation RosyWriterVideoProcessor{
+	
+	NSMutableArray *previousSecondTimestamps;
+	AVCaptureSession *captureSession;
+	AVCaptureConnection *audioConnection;
+	AVCaptureConnection *videoConnection;
+	CMBufferQueueRef previewBufferQueue;
+	
+	NSURL *movieURL;
+	AVAssetWriter *assetWriter;
+	AVAssetWriterInput *assetWriterAudioIn;
+	AVAssetWriterInput *assetWriterVideoIn;
+	dispatch_queue_t movieWritingQueue;
+    
+	AVCaptureVideoOrientation referenceOrientation;
+
+    
+	// Only accessed on movie writing queue
+    BOOL readyToRecordAudio;
+    BOOL readyToRecordVideo;
+	BOOL recordingWillBeStarted;
+	BOOL recordingWillBeStopped;
+    
+}
+
 
 @synthesize delegate;
 @synthesize videoFrameRate, videoDimensions, videoType;
