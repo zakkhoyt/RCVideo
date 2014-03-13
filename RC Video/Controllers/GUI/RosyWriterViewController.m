@@ -48,7 +48,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RosyWriterViewController.h"
 
-static inline double radians (double degrees) { return degrees * (M_PI / 180); }
+//static inline double radians (double degrees) { return degrees * (M_PI / 180); }
 
 @implementation RosyWriterViewController
 
@@ -92,8 +92,8 @@ static inline double radians (double degrees) { return degrees * (M_PI / 180); }
 	CGRect labelFrame = CGRectMake(xPosition, yPosition, labelWidth, labelHeight);
 	UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
 	[label setFont:[UIFont systemFontOfSize:36]];
-	[label setLineBreakMode:UILineBreakModeWordWrap];
-	[label setTextAlignment:UITextAlignmentRight];
+	[label setLineBreakMode:NSLineBreakByWordWrapping];
+	[label setTextAlignment:NSTextAlignmentRight];
 	[label setTextColor:[UIColor whiteColor]];
 	[label setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
 	[[label layer] setCornerRadius: 4];
@@ -115,7 +115,7 @@ static inline double radians (double degrees) { return degrees * (M_PI / 180); }
 	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
 	// Don't update the reference orientation when the device orientation is face up/down or unknown.
 	if ( UIDeviceOrientationIsPortrait(orientation) || UIDeviceOrientationIsLandscape(orientation) )
-		[videoProcessor setReferenceOrientation:orientation];
+		[videoProcessor setReferenceOrientation:(AVCaptureVideoOrientation)orientation];
 }
 
 - (void)viewDidLoad
@@ -138,7 +138,7 @@ static inline double radians (double degrees) { return degrees * (M_PI / 180); }
     
 	oglView = [[RosyWriterPreviewView alloc] initWithFrame:CGRectZero];
 	// Our interface is always in portrait.
-	oglView.transform = [videoProcessor transformFromCurrentVideoOrientationToOrientation:UIInterfaceOrientationPortrait];
+	oglView.transform = [videoProcessor transformFromCurrentVideoOrientationToOrientation:(AVCaptureVideoOrientation)UIInterfaceOrientationPortrait];
     [previewView addSubview:oglView];
  	CGRect bounds = CGRectZero;
  	bounds.size = [self.previewView convertRect:self.previewView.bounds toView:oglView].size;

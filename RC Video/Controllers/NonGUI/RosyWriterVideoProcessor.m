@@ -51,20 +51,7 @@
 
 #define BYTES_PER_PIXEL 4
 
-@interface RosyWriterVideoProcessor ()
-
-// Redeclared as readwrite so that we can write to the property and still be atomic with external readers.
-@property (readwrite) Float64 videoFrameRate;
-@property (readwrite) CMVideoDimensions videoDimensions;
-@property (readwrite) CMVideoCodecType videoType;
-
-@property (readwrite, getter=isRecording) BOOL recording;
-
-@property (readwrite) AVCaptureVideoOrientation videoOrientation;
-
-@end
-
-@implementation RosyWriterVideoProcessor{
+@interface RosyWriterVideoProcessor (){
 	
 	NSMutableArray *previousSecondTimestamps;
 	AVCaptureSession *captureSession;
@@ -79,7 +66,7 @@
 	dispatch_queue_t movieWritingQueue;
     
 	AVCaptureVideoOrientation referenceOrientation;
-
+    
     
 	// Only accessed on movie writing queue
     BOOL readyToRecordAudio;
@@ -88,6 +75,19 @@
 	BOOL recordingWillBeStopped;
     
 }
+
+// Redeclared as readwrite so that we can write to the property and still be atomic with external readers.
+@property (readwrite) Float64 videoFrameRate;
+@property (readwrite) CMVideoDimensions videoDimensions;
+@property (readwrite) CMVideoCodecType videoType;
+
+@property (readwrite, getter=isRecording) BOOL recording;
+
+@property (readwrite) AVCaptureVideoOrientation videoOrientation;
+
+@end
+
+@implementation RosyWriterVideoProcessor
 
 
 @synthesize delegate;
@@ -382,8 +382,8 @@
 {
 	CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
 	
-	int bufferWidth = CVPixelBufferGetWidth(pixelBuffer);
-	int bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
+	int bufferWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
+	int bufferHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
 	unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
     
 	for( int row = 0; row < bufferHeight; row++ ) {

@@ -469,8 +469,8 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 {
 	CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
 	
-	int bufferWidth = CVPixelBufferGetWidth(pixelBuffer);
-	int bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
+	int bufferWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
+	int bufferHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
 	unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
     
 	for( int row = 0; row < bufferHeight; row++ ) {
@@ -515,9 +515,9 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 			dispatch_async(dispatch_get_main_queue(), ^{
 				CMSampleBufferRef sbuf = (CMSampleBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
 				if (sbuf) {
-					CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
+//					CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
 //					[self.delegate pixelBufferReadyForDisplay:pixBuf];
-					CFRelease(sbuf);
+//					CFRelease(sbuf);
 				}
 			});
 		}
