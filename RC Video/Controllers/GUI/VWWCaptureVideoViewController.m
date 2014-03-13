@@ -88,11 +88,9 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     referenceOrientation = (AVCaptureVideoOrientation)UIDeviceOrientationPortrait;
     
     // The temporary path for the video before saving it to the photo album
-    //        movieURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"Movie.MOV"]];
     NSString *myPathDocs =  [[VWWFileController pathForDocumentsDirectory] stringByAppendingPathComponent:
                              [NSString stringWithFormat:@"RosyVideo-%d.mov",arc4random() % 1000]];
     movieURL = [NSURL fileURLWithPath:myPathDocs];
-    //        [movieURL retain];
 
     
     [self setupAndStartCaptureSession];
@@ -269,37 +267,16 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 									dispatch_async(movieWritingQueue, ^{
 										recordingWillBeStopped = NO;
 										recording = NO;
-										
-//										[self.delegate recordingDidStop];
-//                                        dispatch_async(dispatch_get_main_queue(), ^{
-//                                            [[self startButton] setEnabled:YES];
-//                                            
-//                                            [UIApplication sharedApplication].idleTimerDisabled = NO;
-//                                            
-////                                            [videoProcessor resumeCaptureSession];
-////
-////                                            if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-////                                                [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
-////                                                backgroundRecordingID = UIBackgroundTaskInvalid;
-////                                            }
-//                                        });
+
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             [[self startButton] setEnabled:YES];
                                             
                                             [UIApplication sharedApplication].idleTimerDisabled = NO;
                                             
                                             [self resumeCaptureSession];
-                                            
-//                                            if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-//                                                [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
-//                                                backgroundRecordingID = UIBackgroundTaskInvalid;
-//                                            }
                                         });
-                                        
-//                                        [self resumeCaptureSession];
 									});
 								}];
-    //	[library release];
 }
 
 - (void) writeSampleBuffer:(CMSampleBufferRef)sampleBuffer ofType:(NSString *)mediaType
@@ -321,7 +298,7 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 				if (![assetWriterVideoIn appendSampleBuffer:sampleBuffer]) {
 					[self showError:[assetWriter error]];
 				} else {
-                    VWW_LOG_DEBUG(@"Appended buffer");
+//                    VWW_LOG_DEBUG(@"Appended buffer");
                 }
 			}
 		}
@@ -434,10 +411,6 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
             
             // Disable the idle timer while we are recording
             [UIApplication sharedApplication].idleTimerDisabled = YES;
-            
-//            // Make sure we have time to finish saving the movie if the app is backgrounded during recording
-//            if ([[UIDevice currentDevice] isMultitaskingSupported])
-//                backgroundRecordingID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}];
         });
         
 		// Remove the file if one with the same name already exists
@@ -491,6 +464,7 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 
 #pragma mark Processing
 
+
 - (void)processPixelBuffer: (CVImageBufferRef)pixelBuffer
 {
 	CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
@@ -538,14 +512,14 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 		// we'll drop this frame for preview (this keeps preview latency low).
 		OSStatus err = CMBufferQueueEnqueue(previewBufferQueue, sampleBuffer);
 		if ( !err ) {
-//			dispatch_async(dispatch_get_main_queue(), ^{
-//				CMSampleBufferRef sbuf = (CMSampleBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
-//				if (sbuf) {
-//					CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
-////					[self.delegate pixelBufferReadyForDisplay:pixBuf];
-//					CFRelease(sbuf);
-//				}
-//			});
+			dispatch_async(dispatch_get_main_queue(), ^{
+				CMSampleBufferRef sbuf = (CMSampleBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
+				if (sbuf) {
+					CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
+//					[self.delegate pixelBufferReadyForDisplay:pixBuf];
+					CFRelease(sbuf);
+				}
+			});
 		}
 	}
     
@@ -636,16 +610,13 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     AVCaptureDeviceInput *audioIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:nil];
     if ([captureSession canAddInput:audioIn])
         [captureSession addInput:audioIn];
-    //	[audioIn release];
 	
 	AVCaptureAudioDataOutput *audioOut = [[AVCaptureAudioDataOutput alloc] init];
-	dispatch_queue_t audioCaptureQueue = dispatch_queue_create("Audio Capture Queue", DISPATCH_QUEUE_SERIAL);
+	dispatch_queue_t audioCaptureQueue = dispatch_queue_create("com.vaporwarewolf.rcvideo.audiocapture", DISPATCH_QUEUE_SERIAL);
 	[audioOut setSampleBufferDelegate:self queue:audioCaptureQueue];
-    //	dispatch_release(audioCaptureQueue);
 	if ([captureSession canAddOutput:audioOut])
 		[captureSession addOutput:audioOut];
 	audioConnection = [audioOut connectionWithMediaType:AVMediaTypeAudio];
-    //	[audioOut release];
     
 	/*
 	 * Create video connection
@@ -653,7 +624,6 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     AVCaptureDeviceInput *videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self videoDeviceWithPosition:AVCaptureDevicePositionBack] error:nil];
     if ([captureSession canAddInput:videoIn])
         [captureSession addInput:videoIn];
-    //	[videoIn release];
     
     
     // ***** Outputs
@@ -674,14 +644,13 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 	 */
 	[videoOut setAlwaysDiscardsLateVideoFrames:YES];
 	[videoOut setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
+	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("com.vaporwarewolf.rcvideo.videocapture", DISPATCH_QUEUE_SERIAL);
 	[videoOut setSampleBufferDelegate:self queue:videoCaptureQueue];
-    //	dispatch_release(videoCaptureQueue);
+
 	if ([captureSession canAddOutput:videoOut])
 		[captureSession addOutput:videoOut];
 	videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
 	videoOrientation = [videoConnection videoOrientation];
-    //	[videoOut release];
     
 	return YES;
 }
@@ -694,7 +663,7 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
 		[self showError:[NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil]];
 	
 	// Create serial queue for movie writing
-//	movieWritingQueue = dispatch_queue_create("com.vaporwarewolf.rcvideo.capture", DISPATCH_QUEUE_SERIAL);
+//	movieWritingQueue = dispatch_queue_create("com.vaporwarewolf.rcvideo.writing", DISPATCH_QUEUE_SERIAL);
     movieWritingQueue = dispatch_get_main_queue();
 	
     if ( !captureSession )
@@ -733,14 +702,13 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
     [captureSession stopRunning];
 	if (captureSession)
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
-    //	[captureSession release];
+
 	captureSession = nil;
 	if (previewBufferQueue) {
 		CFRelease(previewBufferQueue);
 		previewBufferQueue = NULL;
 	}
 	if (movieWritingQueue) {
-        //		dispatch_release(movieWritingQueue);
 		movieWritingQueue = NULL;
 	}
 }
@@ -756,7 +724,6 @@ static NSString *VWWSegueRecordToEdit = @"VWWSegueRecordToEdit";
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
         [alertView show];
-        //        [alertView release];
     });
 }
 

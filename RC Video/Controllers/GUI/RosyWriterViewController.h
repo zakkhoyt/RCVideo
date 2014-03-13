@@ -1,6 +1,6 @@
 /*
- File: RosyWriterVideoProcessor.h
- Abstract: The class that creates and manages the AV capture session and asset writer
+ File: RosyWriterViewController.h
+ Abstract: View controller for camera interface
  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
@@ -46,72 +46,30 @@
  */
 
 #import <AVFoundation/AVFoundation.h>
-#import <CoreMedia/CMBufferQueue.h>
+#import "RosyWriterPreviewView.h"
+#import "RosyWriterVideoProcessor.h"
 
-@protocol RosyWriterVideoProcessorDelegate;
-
-@interface RosyWriterVideoProcessor : NSObject <AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface RosyWriterViewController : UIViewController <RosyWriterVideoProcessorDelegate>
 {
-    id <RosyWriterVideoProcessorDelegate> delegate;
+    RosyWriterVideoProcessor *videoProcessor;
+    
+	UIView *previewView;
+    RosyWriterPreviewView *oglView;
+    UIBarButtonItem *recordButton;
+	UILabel *frameRateLabel;
+	UILabel *dimensionsLabel;
+	UILabel *typeLabel;
+    
+    NSTimer *timer;
+    
+	BOOL shouldShowStats;
 	
-	NSMutableArray *previousSecondTimestamps;
-	Float64 videoFrameRate;
-	CMVideoDimensions videoDimensions;
-	CMVideoCodecType videoType;
-    
-	AVCaptureSession *captureSession;
-	AVCaptureConnection *audioConnection;
-	AVCaptureConnection *videoConnection;
-	CMBufferQueueRef previewBufferQueue;
-	
-	NSURL *movieURL;
-	AVAssetWriter *assetWriter;
-	AVAssetWriterInput *assetWriterAudioIn;
-	AVAssetWriterInput *assetWriterVideoIn;
-	dispatch_queue_t movieWritingQueue;
-    
-	AVCaptureVideoOrientation referenceOrientation;
-	AVCaptureVideoOrientation videoOrientation;
-    
-	// Only accessed on movie writing queue
-    BOOL readyToRecordAudio;
-    BOOL readyToRecordVideo;
-	BOOL recordingWillBeStarted;
-	BOOL recordingWillBeStopped;
-    
-	BOOL recording;
+	UIBackgroundTaskIdentifier backgroundRecordingID;
 }
 
-@property (readwrite, assign) id <RosyWriterVideoProcessorDelegate> delegate;
+@property (nonatomic, retain) IBOutlet UIView *previewView;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *recordButton;
 
-@property (readonly) Float64 videoFrameRate;
-@property (readonly) CMVideoDimensions videoDimensions;
-@property (readonly) CMVideoCodecType videoType;
+- (IBAction)toggleRecording:(id)sender;
 
-@property (readwrite) AVCaptureVideoOrientation referenceOrientation;
-
-- (CGAffineTransform)transformFromCurrentVideoOrientationToOrientation:(AVCaptureVideoOrientation)orientation;
-
-- (void) showError:(NSError*)error;
-
-- (void) setupAndStartCaptureSession;
-- (void) stopAndTearDownCaptureSession;
-
-- (void) startRecording;
-- (void) stopRecording;
-
-- (void) pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
-- (void) resumeCaptureSession;
-
-@property(readonly, getter=isRecording) BOOL recording;
-
-@end
-
-@protocol RosyWriterVideoProcessorDelegate <NSObject>
-@required
-- (void)pixelBufferReadyForDisplay:(CVPixelBufferRef)pixelBuffer;	// This method is always called on the main thread.
-- (void)recordingWillStart;
-- (void)recordingDidStart;
-- (void)recordingWillStop;
-- (void)recordingDidStop;
 @end

@@ -39,11 +39,12 @@
 		C695863318CE530900835E64 /* VWWMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863218CE530900835E64 /* VWWMotion.m */; };
 		C695863818CE573600835E64 /* VWWDataLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863718CE573600835E64 /* VWWDataLogController.m */; };
 		C695863B18CE5E9900835E64 /* VWWEditVideoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C695863A18CE5E9900835E64 /* VWWEditVideoTableViewController.m */; };
-		C6B78BF118D2503400A8E68A /* RosyWriterVideoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF018D2503400A8E68A /* RosyWriterVideoProcessor.m */; };
-		C6B78BF518D2559500A8E68A /* RosyWriterPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF418D2559500A8E68A /* RosyWriterPreviewView.m */; };
+		C6B78BF118D2503400A8E68A /* RosyWriterVideoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF018D2503400A8E68A /* RosyWriterVideoProcessor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C6B78BF518D2559500A8E68A /* RosyWriterPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF418D2559500A8E68A /* RosyWriterPreviewView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C6B78BF818D256A300A8E68A /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = C6B78BF618D256A300A8E68A /* ShaderUtilities.c */; };
 		C6B78BFC18D256DD00A8E68A /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = C6B78BFA18D256DD00A8E68A /* passThrough.fsh */; };
 		C6B78BFD18D256DD00A8E68A /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = C6B78BFB18D256DD00A8E68A /* passThrough.vsh */; };
+		C6B78C0218D26B0400A8E68A /* RosyWriterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B78C0118D26B0400A8E68A /* RosyWriterViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CFEF645118CEB93E000EDB82 /* VWWFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEF645018CEB93E000EDB82 /* VWWFileController.m */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,8 @@
 		C6B78BFB18D256DD00A8E68A /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 		C6B78BFE18D2598F00A8E68A /* VWWCaptureVideoViewController.m.old.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VWWCaptureVideoViewController.m.old.m; sourceTree = "<group>"; };
 		C6B78BFF18D2598F00A8E68A /* VWWCaptureVideoViewController.h.old.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VWWCaptureVideoViewController.h.old.h; sourceTree = "<group>"; };
+		C6B78C0018D26B0400A8E68A /* RosyWriterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosyWriterViewController.h; sourceTree = "<group>"; };
+		C6B78C0118D26B0400A8E68A /* RosyWriterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosyWriterViewController.m; sourceTree = "<group>"; };
 		CFEF644F18CEB93E000EDB82 /* VWWFileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWFileController.h; sourceTree = "<group>"; };
 		CFEF645018CEB93E000EDB82 /* VWWFileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWFileController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -323,6 +326,8 @@
 				C6B78BFF18D2598F00A8E68A /* VWWCaptureVideoViewController.h.old.h */,
 				C6204E7218CE4992007B8986 /* VWWCaptureVideoViewController.h */,
 				C6204E7318CE4992007B8986 /* VWWCaptureVideoViewController.m */,
+				C6B78C0018D26B0400A8E68A /* RosyWriterViewController.h */,
+				C6B78C0118D26B0400A8E68A /* RosyWriterViewController.m */,
 			);
 			name = Capture;
 			sourceTree = "<group>";
@@ -544,6 +549,7 @@
 				C6204E5F18CE42F9007B8986 /* VWWAddAnimationViewController.m in Sources */,
 				C6B78BF518D2559500A8E68A /* RosyWriterPreviewView.m in Sources */,
 				C6204E6218CE42F9007B8986 /* VWWAddSubtitleViewController.m in Sources */,
+				C6B78C0218D26B0400A8E68A /* RosyWriterViewController.m in Sources */,
 				C6204E6118CE42F9007B8986 /* VWWAddOverlayViewController.m in Sources */,
 				C695862818CE4F9500835E64 /* MBProgressHUD.m in Sources */,
 				C695863318CE530900835E64 /* VWWMotion.m in Sources */,

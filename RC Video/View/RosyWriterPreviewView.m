@@ -143,7 +143,7 @@ enum {
         oglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         if (!oglContext || ![EAGLContext setCurrentContext:oglContext]) {
             NSLog(@"Problem with OpenGL context.");
-//            [self release];
+            [self release];
             
             return nil;
         }
@@ -167,12 +167,12 @@ enum {
     
     // Validate program before drawing. This is a good check, but only really necessary in a debug build.
     // DEBUG macro must be defined in your debug configurations if that's not already the case.
-#if defined(DEBUG)    
-    if (glueValidateProgram(passThroughProgram) != 0) {
-        NSLog(@"Failed to validate program: %d", passThroughProgram);
-        return;
-    }    
-#endif
+//#if defined(DEBUG)    
+//    if (glueValidateProgram(passThroughProgram) != 0) {
+//        NSLog(@"Failed to validate program: %d", passThroughProgram);
+//        return;
+//    }    
+//#endif
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -300,7 +300,7 @@ enum {
         videoTextureCache = 0;
     }
     
-//    [super dealloc];
+    [super dealloc];
 }
 
 @end
